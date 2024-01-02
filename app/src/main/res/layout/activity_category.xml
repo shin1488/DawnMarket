@@ -13,15 +13,88 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activity.CategoryActivity">
-        
-        <androidx.recyclerview.widget.RecyclerView
+        tools:context=".ui.activity.CategoryActivity"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/category_text_signIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/category_recyclerView"
+            android:layout_margin="20dp"
+            android:text="로그인해주세요"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/category_imageButton_notification"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintEnd_toStartOf="@+id/category_imageButton_setting"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/category_imageButton_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_recyclerView_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_text_signIn"/>
+
+        <TextView
+            android:id="@+id/category_divider"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/dividerGrayBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_recyclerView_category"/>
+
+        <TextView
+            android:id="@+id/category_text_quickMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="기획전 / 이벤트"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_divider"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_recyclerView_quickMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_text_quickMenu"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/category_bottomNavigationBar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
