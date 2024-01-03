@@ -1,12 +1,14 @@
-package kr.co.teamfresh.syc.dawnmarket.ui.adapters
+package kr.co.teamfresh.syc.dawnmarket.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppMainQuickMenuDTO
 import kr.co.teamfresh.syc.dawnmarket.databinding.QuickmenuRecyclerViewBinding
+import kr.co.teamfresh.syc.dawnmarket.utils.DevelopmentToast
 
 class QuickMenuAdapter(private var quickMenus: List<AppMainQuickMenuDTO>) :
     RecyclerView.Adapter<QuickMenuAdapter.QuickMenuViewHolder>() {
@@ -26,6 +28,13 @@ class QuickMenuAdapter(private var quickMenus: List<AppMainQuickMenuDTO>) :
             .load("https://d1afu5va4iy6dc.cloudfront.net/${quickMenu.quickMenuImgPath}")
             .into(holder.binding.quickMenuImageRecyclerView)
         holder.binding.quickMenuNameRecyclerView.text = quickMenu.quickMenuNm
+
+        val showToast = View.OnClickListener {
+            DevelopmentToast.showToast(holder.itemView.context)
+        }
+        holder.binding.quickMenuImageRecyclerView.setOnClickListener(showToast)
+        holder.binding.quickMenuNameRecyclerView.setOnClickListener(showToast)
+
         holder.binding.executePendingBindings()
     }
 

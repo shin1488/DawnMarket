@@ -1,4 +1,4 @@
-package kr.co.teamfresh.syc.dawnmarket.ui.adapters
+package kr.co.teamfresh.syc.dawnmarket.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

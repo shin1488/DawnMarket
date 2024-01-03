@@ -7,7 +7,9 @@
         <variable
             name="categoryViewModel"
             type="kr.co.teamfresh.syc.dawnmarket.viewmodels.CategoryViewModel"/>
-
+        <variable
+            name="quickMenuViewModel"
+            type="kr.co.teamfresh.syc.dawnmarket.viewmodels.QuickMenuViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,17 +31,17 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
-            android:id="@+id/category_imageButton_notification"
+            android:id="@+id/category_image_notification"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_notification"
-            app:layout_constraintEnd_toStartOf="@+id/category_imageButton_setting"
+            app:layout_constraintEnd_toStartOf="@+id/category_image_setting"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
-            android:id="@+id/category_imageButton_setting"
+            android:id="@+id/category_image_setting"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="25dp"
@@ -92,7 +94,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/category_bottomNavigationBar"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
+            app:menu="@menu/category_bottom_navigation"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

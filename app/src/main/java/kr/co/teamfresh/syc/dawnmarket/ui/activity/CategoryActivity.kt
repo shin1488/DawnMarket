@@ -2,6 +2,7 @@ package kr.co.teamfresh.syc.dawnmarket.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +16,13 @@ import kr.co.teamfresh.syc.dawnmarket.data.network.CategoryRepository
 import kr.co.teamfresh.syc.dawnmarket.data.network.QuickMenuRepository
 import kr.co.teamfresh.syc.dawnmarket.data.network.RetrofitInstance
 import kr.co.teamfresh.syc.dawnmarket.databinding.ActivityCategoryBinding
-import kr.co.teamfresh.syc.dawnmarket.ui.adapters.CategoryAdapter
-import kr.co.teamfresh.syc.dawnmarket.ui.adapters.QuickMenuAdapter
+import kr.co.teamfresh.syc.dawnmarket.adapters.CategoryAdapter
+import kr.co.teamfresh.syc.dawnmarket.adapters.QuickMenuAdapter
+import kr.co.teamfresh.syc.dawnmarket.utils.DevelopmentToast
 import kr.co.teamfresh.syc.dawnmarket.viewmodels.CategoryViewModel
 import kr.co.teamfresh.syc.dawnmarket.viewmodels.QuickMenuViewModel
 
-class CategoryActivity : AppCompatActivity() {
+class CategoryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var quickMenuViewModel: QuickMenuViewModel
     private lateinit var binding: ActivityCategoryBinding
@@ -59,6 +61,29 @@ class CategoryActivity : AppCompatActivity() {
                         quickMenuAdapter.updateQuickMenus(quickMenus)
                     }
                 }
+            }
+        }
+        binding.categoryTextSignIn.setOnClickListener(this)
+        binding.categoryImageNotification.setOnClickListener(this)
+        binding.categoryImageSetting.setOnClickListener(this)
+        binding.categoryBottomNavigationBar.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.category_bottomNavigation_category -> { true }
+                else -> {
+                    DevelopmentToast.showToast(this)
+                    false
+                }
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if(v == null) return
+        when(v.id) {
+            R.id.category_text_signIn,
+            R.id.category_image_notification,
+            R.id.category_image_setting -> {
+                DevelopmentToast.showToast(this)
             }
         }
     }
