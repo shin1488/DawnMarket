@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppMainQuickMenuDTO
 import kr.co.teamfresh.syc.dawnmarket.databinding.QuickmenuRecyclerViewBinding
-import kr.co.teamfresh.syc.dawnmarket.utils.DevelopmentToast
+import kr.co.teamfresh.syc.dawnmarket.viewmodels.QuickMenuViewModel
 
-class QuickMenuAdapter(private var quickMenus: List<AppMainQuickMenuDTO>) :
-    RecyclerView.Adapter<QuickMenuAdapter.QuickMenuViewHolder>() {
+class QuickMenuAdapter(
+    private var quickMenus: List<AppMainQuickMenuDTO>,
+    private val quickMenuViewModel: QuickMenuViewModel
+) : RecyclerView.Adapter<QuickMenuAdapter.QuickMenuViewHolder>() {
 
     class QuickMenuViewHolder(val binding: QuickmenuRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -29,11 +31,11 @@ class QuickMenuAdapter(private var quickMenus: List<AppMainQuickMenuDTO>) :
             .into(holder.binding.quickMenuImageRecyclerView)
         holder.binding.quickMenuNameRecyclerView.text = quickMenu.quickMenuNm
 
-        val showToast = View.OnClickListener {
-            DevelopmentToast.showToast(holder.itemView.context)
+        val clickLister = View.OnClickListener {
+            quickMenuViewModel.onQuickMenuItemClicked()
         }
-        holder.binding.quickMenuImageRecyclerView.setOnClickListener(showToast)
-        holder.binding.quickMenuNameRecyclerView.setOnClickListener(showToast)
+        holder.binding.quickMenuImageRecyclerView.setOnClickListener(clickLister)
+        holder.binding.quickMenuNameRecyclerView.setOnClickListener(clickLister)
 
         holder.binding.executePendingBindings()
     }

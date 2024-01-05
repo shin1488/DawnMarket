@@ -1,5 +1,6 @@
 package kr.co.teamfresh.syc.dawnmarket.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,14 +19,14 @@ import kr.co.teamfresh.syc.dawnmarket.data.network.RetrofitInstance
 import kr.co.teamfresh.syc.dawnmarket.databinding.ActivityCategoryBinding
 import kr.co.teamfresh.syc.dawnmarket.adapters.CategoryAdapter
 import kr.co.teamfresh.syc.dawnmarket.adapters.QuickMenuAdapter
-import kr.co.teamfresh.syc.dawnmarket.utils.DevelopmentToast
+import kr.co.teamfresh.syc.dawnmarket.utils.ToastUtils
 import kr.co.teamfresh.syc.dawnmarket.viewmodels.CategoryViewModel
 import kr.co.teamfresh.syc.dawnmarket.viewmodels.QuickMenuViewModel
 
 class CategoryActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var binding: ActivityCategoryBinding
     private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var quickMenuViewModel: QuickMenuViewModel
-    private lateinit var binding: ActivityCategoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class CategoryActivity : AppCompatActivity(), View.OnClickListener {
         val categoryViewModelFactory = CategoryViewModel.CategoryViewModelFactory(categoryRepository)
         categoryViewModel = ViewModelProvider(this, categoryViewModelFactory)[CategoryViewModel::class.java]
 
-        val categoryAdapter = CategoryAdapter(emptyList())
+        val categoryAdapter = CategoryAdapter(emptyList(), categoryViewModel)
         binding.categoryRecyclerViewCategory.layoutManager = GridLayoutManager(this, 4)
         binding.categoryRecyclerViewCategory.adapter = categoryAdapter
 
@@ -45,7 +46,7 @@ class CategoryActivity : AppCompatActivity(), View.OnClickListener {
         val quickMenuViewModelFactory = QuickMenuViewModel.QuickMenuViewModelFactory(quickMenuRepository)
         quickMenuViewModel = ViewModelProvider(this, quickMenuViewModelFactory)[QuickMenuViewModel::class.java]
 
-        val quickMenuAdapter = QuickMenuAdapter(emptyList())
+        val quickMenuAdapter = QuickMenuAdapter(emptyList(), quickMenuViewModel)
         binding.categoryRecyclerViewQuickMenu.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.categoryRecyclerViewQuickMenu.adapter = quickMenuAdapter
 
@@ -61,6 +62,23 @@ class CategoryActivity : AppCompatActivity(), View.OnClickListener {
                         quickMenuAdapter.updateQuickMenus(quickMenus)
                     }
                 }
+                launch {
+                    quickMenuViewModel.showToast.collect { showToast ->
+                        if(showToast) {
+                            ToastUtils.showDevelopmentToast(this@CategoryActivity)
+                        }
+                    }
+                }
+                launch {
+                    categoryViewModel.selectedItem.collect { selectedItem ->
+                        if(selectedItem == null) return@collect
+                        val intent = Intent(this@CategoryActivity, CategoryDetailActivity::class.java)
+                        intent.putExtra("dispClasSeq", selectedItem.dispClasSeq)
+                        intent.putExtra("dispClasNm", selectedItem.dispClasNm)
+                        startActivity(intent)
+                        categoryViewModel.clearSelectedItem()
+                    }
+                }
             }
         }
         binding.categoryTextSignIn.setOnClickListener(this)
@@ -70,7 +88,7 @@ class CategoryActivity : AppCompatActivity(), View.OnClickListener {
             when(item.itemId) {
                 R.id.category_bottomNavigation_category -> { true }
                 else -> {
-                    DevelopmentToast.showToast(this)
+                    ToastUtils.showDevelopmentToast(this)
                     false
                 }
             }
@@ -83,7 +101,7 @@ class CategoryActivity : AppCompatActivity(), View.OnClickListener {
             R.id.category_text_signIn,
             R.id.category_image_notification,
             R.id.category_image_setting -> {
-                DevelopmentToast.showToast(this)
+                ToastUtils.showDevelopmentToast(this)
             }
         }
     }
