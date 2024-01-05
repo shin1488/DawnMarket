@@ -33,7 +33,6 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
                     val combinedProducts = mutableListOf<AppGoodsInfoDTO>()
                     var productNum = 0
                     for (seq in 1 .. subCategorySize) {
-                        Log.d("dddd", "${prntsDispClasSeq} ${prntsDispClasSeq.toInt() + seq} ${selectedOrdering}")
                         val pageResponseAppGoodsInfoDTO = repository.getProductsInfo(prntsDispClasSeq.toInt(), prntsDispClasSeq.toInt() + seq, selectedOrdering)
                         val products = pageResponseAppGoodsInfoDTO.data
                         productNum += pageResponseAppGoodsInfoDTO.pagination.totalElements
