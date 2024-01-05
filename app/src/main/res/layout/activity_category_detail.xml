@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            app:stickyHeader="@id/dmddo"
+            app:stickyHeader="@id/detail_sticky_header_layout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,24 +96,94 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
 
-                <TextView
-                    android:id="@+id/dmddo"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detail_sticky_header_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="응애"
                     android:background="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detail_sub_category_recyclerView"/>
+                    app:layout_constraintTop_toBottomOf="@id/detail_sub_category_recyclerView">
+
+                    <TextView
+                        android:id="@+id/detail_product_num_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="25dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/detail_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dividerGrayBackground"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_product_num_text"/>
+
+                    <LinearLayout
+                        android:id="@+id/detail_ordering_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingBottom="20dp"
+                        android:layout_marginStart="25dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detail_divider">
+
+                        <TextView
+                            android:id="@+id/detail_recommend_ordering_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="추천순"
+                            android:gravity="start"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/detail_selling_ordering_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="판매량순"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/detail_lowPrice_ordering_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="낮은가격순"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/detail_highPrice_ordering_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="높은가격순"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/detail_product_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
+                    android:overScrollMode="never"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dmddo"/>
+                    app:layout_constraintTop_toBottomOf="@id/detail_sticky_header_layout"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.amar.library.ui.StickyScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

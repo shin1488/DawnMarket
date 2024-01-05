@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kr.co.teamfresh.syc.dawnmarket.data.StateFlowManager
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppGoodsInfoDTO
 import kr.co.teamfresh.syc.dawnmarket.databinding.ProductRecyclerViewBinding
-import kr.co.teamfresh.syc.dawnmarket.viewmodels.ProductViewModel
+import kr.co.teamfresh.syc.dawnmarket.utils.ToastUtils
 import java.text.DecimalFormat
 
 class ProductAdapter(
-    private var products: List<AppGoodsInfoDTO>,
-    private val productviewModel: ProductViewModel
+    private var products: List<AppGoodsInfoDTO>
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: ProductRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
@@ -29,6 +29,7 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.binding.product = product
+
         val decimal = DecimalFormat("#,###")
 
         Glide.with(holder.binding.productImage.context)
@@ -55,14 +56,30 @@ class ProductAdapter(
         } else holder.binding.productFinalPriceText.text ="${decimal.format(product.slePrice)}원"
         holder.binding.productOptionText.text = product.goodsNrm
 
+        holder.binding.productBasketImage.setOnClickListener { ToastUtils.showAddedToCartToast(holder.itemView.context, product.goodsNm)}
+
         holder.binding.executePendingBindings()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<AppGoodsInfoDTO>) {
-        products = newProducts
+        val filteredProducts = mutableListOf<AppGoodsInfoDTO>()
+        var noDisplayItemCount = 0
+
+        for (product in newProducts) {
+            if (product.mnrBuyYn == "Y" && product.goodsStat == "판매중") {
+                filteredProducts.add(product)
+            } else {
+                noDisplayItemCount++
+            }
+        }
+
+        StateFlowManager.setNoDisplayItemCount(noDisplayItemCount)
+
+        products = filteredProducts
         notifyDataSetChanged()
     }
+
 
     override fun getItemCount() = products.size
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.teamfresh.syc.dawnmarket.R
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppSubDispClasInfoDTO
 import kr.co.teamfresh.syc.dawnmarket.databinding.SubCategoryRecyclerViewBinding
 import kr.co.teamfresh.syc.dawnmarket.viewmodels.SubCategoryViewModel
@@ -14,6 +15,8 @@ class SubCategoryAdapter(
     private var subCategories: List<AppSubDispClasInfoDTO>,
     private val subCategoryViewModel: SubCategoryViewModel
 ) : RecyclerView.Adapter<SubCategoryAdapter.SubCategoryViewHolder>() {
+
+    private var selectedPosition = 0
 
     class SubCategoryViewHolder(val binding: SubCategoryRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,10 +28,14 @@ class SubCategoryAdapter(
 
     override fun onBindViewHolder(holder: SubCategoryViewHolder, position: Int) {
         val subCategory = subCategories[position]
+        if(position == selectedPosition) holder.binding.detailSubCategoryNameRecyclerView.setTextAppearance(R.style.Selected)
+        else holder.binding.detailSubCategoryNameRecyclerView.setTextAppearance(R.style.Unselected)
         holder.binding.subCategory = subCategory
         holder.binding.detailSubCategoryNameRecyclerView.text = subCategory.subDispClasNm
 
         holder.binding.detailSubCategoryNameRecyclerView.setOnClickListener {
+            selectedPosition = holder.adapterPosition
+            notifyDataSetChanged()
             subCategoryViewModel.onSubCategoryNameClicked(subCategory.dispClasSeq)
         }
 

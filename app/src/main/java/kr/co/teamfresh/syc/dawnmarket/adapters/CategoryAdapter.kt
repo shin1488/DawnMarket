@@ -41,11 +41,11 @@ class CategoryAdapter(
             holder.itemView.context.startActivity(intent)
         }
 
-        val clickLister = View.OnClickListener {
+        val clickListener = View.OnClickListener {
             categoryViewModel.onCategoryItemClicked(category)
         }
-        holder.binding.categoryImageRecyclerView.setOnClickListener(clickLister)
-        holder.binding.categoryNameRecyclerView.setOnClickListener(clickLister)
+        holder.binding.categoryImageRecyclerView.setOnClickListener(clickListener)
+        holder.binding.categoryNameRecyclerView.setOnClickListener(clickListener)
 
         holder.binding.executePendingBindings()
     }

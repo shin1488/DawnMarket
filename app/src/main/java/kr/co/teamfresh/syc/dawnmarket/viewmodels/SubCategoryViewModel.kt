@@ -1,15 +1,13 @@
 package kr.co.teamfresh.syc.dawnmarket.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
-import kr.co.teamfresh.syc.dawnmarket.data.DispClasSeqManager
+import kr.co.teamfresh.syc.dawnmarket.data.StateFlowManager
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppSubDispClasInfoDTO
 import kr.co.teamfresh.syc.dawnmarket.data.network.SubCategoryRepository
 
@@ -24,12 +22,14 @@ class SubCategoryViewModel(private val repository: SubCategoryRepository, privat
     private fun fetchSubCategories() {
         viewModelScope.launch {
             _subCategories.value = repository.getSubCategories(prntsDispClasSeq)
-            DispClasSeqManager.setCategorySize(subCategories.value.size)
+            StateFlowManager.setCategorySize(subCategories.value.size)
         }
     }
 
     fun onSubCategoryNameClicked(dispClasSeq: Int) {
-        DispClasSeqManager.setDispClasSeq(dispClasSeq)
+        StateFlowManager.setDispClasSeq(dispClasSeq)
+        StateFlowManager.setProductNum(0)
+        StateFlowManager.clearNoDisplayItemCount()
     }
 
     class SubCategoryViewModelFactory(private val repository: SubCategoryRepository, private val prntsDispClasSeq: Long) : ViewModelProvider.Factory {

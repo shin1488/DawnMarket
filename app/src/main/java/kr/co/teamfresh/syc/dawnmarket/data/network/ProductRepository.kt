@@ -1,19 +1,17 @@
 package kr.co.teamfresh.syc.dawnmarket.data.network
 
 import android.util.Log
-import kr.co.teamfresh.syc.dawnmarket.data.models.AppGoodsInfoDTO
-import kr.co.teamfresh.syc.dawnmarket.data.models.AppMainQuickMenuDTO
-import kr.co.teamfresh.syc.dawnmarket.data.models.AppSubDispClasInfoDTO
+import kr.co.teamfresh.syc.dawnmarket.data.models.PageResponseAppGoodsInfoDTO
+import kr.co.teamfresh.syc.dawnmarket.data.models.PaginationDTO
 import java.lang.Exception
 
 class ProductRepository(private val apiService: ApiService) {
-    suspend fun getProducts(dispClasSeq: Int, prntsDispClasSeq: Int): List<AppGoodsInfoDTO> {
+    suspend fun getProductsInfo(dispClasSeq: Int, prntsDispClasSeq: Int, selectedOrdering: String): PageResponseAppGoodsInfoDTO {
         return try {
-            val response = apiService.getProducts(dispClasSeq, prntsDispClasSeq)
-            response.data
+            apiService.getProducts(dispClasSeq, prntsDispClasSeq, searchValue = selectedOrdering)
         } catch (e: Exception) {
             e.message?.let { Log.e("fetch exception", it) }
-            emptyList()
+            PageResponseAppGoodsInfoDTO(emptyList(), PaginationDTO(0, 0, 0, 0))
         }
     }
 }

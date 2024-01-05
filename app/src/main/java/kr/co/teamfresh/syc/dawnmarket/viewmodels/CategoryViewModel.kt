@@ -1,18 +1,15 @@
 package kr.co.teamfresh.syc.dawnmarket.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kr.co.teamfresh.syc.dawnmarket.data.DispClasSeqManager
+import kr.co.teamfresh.syc.dawnmarket.data.StateFlowManager
 import kr.co.teamfresh.syc.dawnmarket.data.models.AppDispClasInfoDTO
 import kr.co.teamfresh.syc.dawnmarket.data.network.CategoryRepository
-import javax.inject.Inject
 
 class CategoryViewModel(private val repository: CategoryRepository) : ViewModel() {
     private val _categories = MutableStateFlow<List<AppDispClasInfoDTO>>(emptyList())
@@ -33,7 +30,7 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
 
     fun onCategoryItemClicked (item: AppDispClasInfoDTO) {
         _selectedItem.value = item
-        DispClasSeqManager.setPrntsDispClasSeq(item.dispClasSeq)
+        StateFlowManager.setPrntsDispClasSeq(item.dispClasSeq)
     }
 
     fun clearSelectedItem() { _selectedItem.value = null }
